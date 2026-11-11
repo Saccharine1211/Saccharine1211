@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="330" viewBox="0 0 900 330" role="img" aria-label="Jimin Kim — Backend &amp; Infra Engineer">
+<style>
+.m{font:14px ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace;}
+.s{font:15px -apple-system,BlinkMacSystemFont,'Segoe UI','Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',Helvetica,Arial,sans-serif;}
+.b{font-weight:600;font-size:17px}
+.n{font-weight:400;font-size:15px}
+.ln{opacity:0;animation:in .35s ease-out forwards}
+@keyframes in{to{opacity:1}}
+.cur{animation:blink 1.1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+@media (prefers-reduced-motion:reduce){.ln{opacity:1;animation:none}.cur{animation:none}}
+</style>
+<rect x="1" y="1" width="898" height="328" rx="12" fill="#ffffff" stroke="#d0d7de"/>
+<path d="M1 13a12 12 0 0 1 12-12h874a12 12 0 0 1 12 12v27H1z" fill="#f6f8fa"/>
+<line x1="1" y1="40" x2="899" y2="40" stroke="#d0d7de"/>
+<circle cx="24" cy="21" r="6" fill="#ff5f57"/><circle cx="44" cy="21" r="6" fill="#febc2e"/><circle cx="64" cy="21" r="6" fill="#28c840"/>
+<text x="450.0" y="26" text-anchor="middle" class="m" fill="#59636e">jimin@prod: ~ — zsh</text>
+<g class="ln" style="animation-delay:0.00s" transform="translate(0,78)"><text x="34" class="m"><tspan fill="#1a7f37">jimin@prod</tspan><tspan fill="#59636e">:</tspan><tspan fill="#0969da">~</tspan><tspan fill="#59636e">$ </tspan><tspan fill="#1f2328">whoami</tspan></text></g>
+<g class="ln" style="animation-delay:0.35s" transform="translate(0,104)"><text x="34" class="s b" fill="#1f2328">Jimin Kim <tspan fill="#59636e" class="n">(김지민)</tspan><tspan fill="#59636e" class="n">  ·  </tspan><tspan fill="#8250df">Backend &amp; Infra Engineer</tspan></text></g>
+<g class="ln" style="animation-delay:0.70s" transform="translate(0,130)"><text x="34" class="s" fill="#59636e">API 서버를 만들고, 그 서버가 멈추지 않는 길을 깝니다 — 멀티 클라우드 · 무중단 이전 · 관측</text></g>
+<g class="ln" style="animation-delay:1.05s" transform="translate(0,170)"><text x="34" class="m"><tspan fill="#1a7f37">jimin@prod</tspan><tspan fill="#59636e">:</tspan><tspan fill="#0969da">~</tspan><tspan fill="#59636e">$ </tspan><tspan fill="#1f2328">kubectl get deploy -A -l owner=jimin</tspan></text></g>
+<g class="ln" style="animation-delay:1.40s" transform="translate(0,196)"><text x="34" class="m" fill="#59636e">NAMESPACE</text><text x="150" class="m" fill="#59636e">NAME</text><text x="330" class="m" fill="#59636e">READY</text><text x="410" class="m" fill="#59636e">STATUS</text><text x="560" class="m" fill="#59636e">WHERE</text></g>
+<g class="ln" style="animation-delay:1.75s" transform="translate(0,220)"><text x="34" class="m" fill="#59636e">mori</text><text x="150" class="m" fill="#1f2328">contentcare-api</text><text x="330" class="m" fill="#1f2328">1/1</text><text x="410" class="m" fill="#1a7f37">Running</text><text x="560" class="m" fill="#59636e">AWS · production</text></g>
+<g class="ln" style="animation-delay:2.10s" transform="translate(0,244)"><text x="34" class="m" fill="#59636e">echo</text><text x="150" class="m" fill="#1f2328">echoport-was</text><text x="330" class="m" fill="#1f2328">1/1</text><text x="410" class="m" fill="#9a6700">Awarded 🏆</text><text x="560" class="m" fill="#59636e">AWS EKS · GCP GKE · on-prem k3s</text></g>
+<g class="ln" style="animation-delay:2.45s" transform="translate(0,268)"><text x="34" class="m" fill="#59636e">iris</text><text x="150" class="m" fill="#1f2328">likelion-was</text><text x="330" class="m" fill="#1f2328">1/1</text><text x="410" class="m" fill="#0969da">Completed</text><text x="560" class="m" fill="#59636e">AWS EKS · GKE · Argo CD</text></g>
+<g class="ln" style="animation-delay:2.80s" transform="translate(0,308)"><text x="34" class="m"><tspan fill="#1a7f37">jimin@prod</tspan><tspan fill="#59636e">:</tspan><tspan fill="#0969da">~</tspan><tspan fill="#59636e">$ </tspan><tspan fill="#1f2328"></tspan></text><rect class="cur" x="166" y="-13" width="9" height="17" fill="#1f2328"/></g>
+</svg>
