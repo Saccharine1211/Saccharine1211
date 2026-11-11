@@ -17,6 +17,8 @@ from pathlib import Path
 LOGIN = os.environ.get("PROFILE_LOGIN", "Saccharine1211")
 README = Path(__file__).resolve().parent.parent / "README.md"
 N = 5
+# 프로필 방향(백엔드 + 인프라)과 무관한 프런트엔드 레포 활동은 Recently에서 뺀다.
+SKIP_REPO = re.compile(r"frontend|-web$|\.github\.io$", re.I)
 
 
 def api(url: str, body: dict | None = None) -> dict:
@@ -50,7 +52,7 @@ def pr_lines(items: list[dict], date_key: str, per_repo: int = 2) -> list[str]:
     out, seen, count = [], set(), {}
     for it in items:
         repo = it["repository_url"].rsplit("/", 1)[-1]
-        if it["html_url"] in seen or count.get(repo, 0) >= per_repo:
+        if SKIP_REPO.search(repo) or it["html_url"] in seen or count.get(repo, 0) >= per_repo:
             continue
         seen.add(it["html_url"])
         count[repo] = count.get(repo, 0) + 1
@@ -71,7 +73,7 @@ def repo_lines() -> list[str]:
     nodes.sort(key=lambda n: n["pushedAt"] or "", reverse=True)  # API 정렬이 믿을 만하지 않아 직접 정렬
     out = []
     for n in nodes:
-        if n["isFork"] or n["nameWithOwner"].lower() == f"{LOGIN}/{LOGIN}".lower():
+        if n["isFork"] or SKIP_REPO.search(n["nameWithOwner"]) or n["nameWithOwner"].lower() == f"{LOGIN}/{LOGIN}".lower():
             continue
         desc = f'<br><sub>{clean(n["description"], 46)}</sub>' if n["description"] else ""
         owner, name = n["nameWithOwner"].split("/", 1)

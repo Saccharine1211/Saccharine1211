@@ -24,18 +24,23 @@ MONO = "ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',m
 SANS = ("-apple-system,BlinkMacSystemFont,'Segoe UI','Apple SD Gothic Neo',"
         "'Noto Sans KR','Malgun Gothic',Helvetica,Arial,sans-serif")
 
-# ── 헤더: kubectl 출력처럼 보이는 자기소개 ─────────────────────────────
-HEADER_COLS = [("NAMESPACE", 34), ("NAME", 150), ("READY", 330), ("STATUS", 410), ("WHERE", 560)]
+# ── 헤더: 운영 중인 환경 목록처럼 보이는 자기소개 ─────────────────────
+TITLE = "Backend Engineer, owning Infra"
+TAGLINE = "API 서버에서 시작해, 그 서버가 도는 인프라와 운영까지 맡습니다 — 멀티 클라우드 · IaC · 무중단 이전 · 관측"
+COMMAND = "infra status --owner jimin"
+HEADER_COLS = [("ENV", 34), ("PROVIDER", 160), ("ROLE", 344), ("STATUS", 612)]
 HEADER_ROWS = [
-    # (namespace, name, ready, status, status_color, where)
-    ("mori", "contentcare-api", "1/1", "Running", "green", "AWS · production"),
-    ("echo", "echoport-was", "1/1", "Awarded 🏆", "orange", "AWS EKS · GCP GKE · on-prem k3s"),
-    ("iris", "likelion-was", "1/1", "Completed", "blue", "AWS EKS · GKE · Argo CD"),
+    # (env, provider, role, status, status_color)
+    ("mori-prod", "AWS", "production · release train", "Running", "green"),
+    ("echo-tokyo", "AWS EKS", "workload", "Failover → GKE in 11s", "orange"),
+    ("echo-seoul", "GCP GKE", "control plane · workload", "Ready", "green"),
+    ("echo-onprem", "k3s", "edge · Cloudflare Tunnel", "Reconnected", "blue"),
+    ("likelion", "EKS · GKE · on-prem", "GitOps · Argo CD", "Completed", "purple"),
 ]
 
 
 def header_svg(t: dict) -> str:
-    w, h = 900, 330
+    w, h = 900, 392
     lines: list[str] = []
     step = 0.35  # 줄마다 나타나는 간격(초)
 
@@ -52,26 +57,25 @@ def header_svg(t: dict) -> str:
     i = 0
     row(78, prompt("whoami"), i); i += 1
     row(104, f'<text x="34" class="s b" fill="{t["text"]}">Jimin Kim <tspan fill="{t["muted"]}" class="n">(김지민)</tspan>'
-             f'<tspan fill="{t["muted"]}" class="n">  ·  </tspan><tspan fill="{t["purple"]}">Backend &amp; Infra Engineer</tspan></text>', i); i += 1
-    row(130, f'<text x="34" class="s" fill="{t["muted"]}">API 서버를 만들고, 그 서버가 멈추지 않는 길을 깝니다 — 멀티 클라우드 · 무중단 이전 · 관측</text>', i); i += 1
-    row(170, prompt("kubectl get deploy -A -l owner=jimin"), i); i += 1
+             f'<tspan fill="{t["muted"]}" class="n">  ·  </tspan><tspan fill="{t["purple"]}">{escape(TITLE)}</tspan></text>', i); i += 1
+    row(130, f'<text x="34" class="s" fill="{t["muted"]}">{escape(TAGLINE)}</text>', i); i += 1
+    row(170, prompt(COMMAND), i); i += 1
     head = "".join(f'<text x="{x}" class="m" fill="{t["muted"]}">{n}</text>' for n, x in HEADER_COLS)
     row(196, head, i); i += 1
     y = 220
-    for ns, name, ready, status, color, where in HEADER_ROWS:
+    for env, provider, role, status, color in HEADER_ROWS:
         cells = [
-            (HEADER_COLS[0][1], ns, t["muted"]),
-            (HEADER_COLS[1][1], name, t["text"]),
-            (HEADER_COLS[2][1], ready, t["text"]),
+            (HEADER_COLS[0][1], env, t["text"]),
+            (HEADER_COLS[1][1], provider, t["muted"]),
+            (HEADER_COLS[2][1], role, t["muted"]),
             (HEADER_COLS[3][1], status, t[color]),
-            (HEADER_COLS[4][1], where, t["muted"]),
         ]
         row(y, "".join(f'<text x="{x}" class="m" fill="{c}">{escape(v)}</text>' for x, v, c in cells), i)
         i += 1
         y += 24
     row(y + 16, prompt("") + f'<rect class="cur" x="166" y="-13" width="9" height="17" fill="{t["text"]}"/>', i)
 
-    return f'''<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}" role="img" aria-label="Jimin Kim — Backend &amp; Infra Engineer">
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}" role="img" aria-label="Jimin Kim — {escape(TITLE)}">
 <style>
 .m{{font:14px {MONO};}}
 .s{{font:15px {SANS};}}
@@ -97,19 +101,19 @@ def header_svg(t: dict) -> str:
 CARDS = [
     dict(slug="echoport", badge="🏆 SoftBank Hackathon 2026 본선 우수상(2위)", badge_color="orange",
          title="EchoPort", subtitle="멀티 클라우드 무중단 이전(BCDR) 플랫폼",
-         role="Team Echo · API 서버 · 인프라 · 시연 앱",
+         role="Team Echo · 제어부 API · 멀티 클라우드 인프라 · 이전 엔진",
          metrics=[("11s", "도쿄 → 서울 긴급 이전"), ("0/149", "판정 요청 중 실패"), ("123", "merged PRs")],
-         tags=["FastAPI", "PostgreSQL", "EKS", "GKE", "k3s", "Envoy", "Terraform"]),
+         tags=["FastAPI", "Terraform", "EKS", "GKE", "k3s", "Envoy", "PgBouncer"]),
     dict(slug="contentcare", badge="주식회사 모리 · 2025.09 ~ 재직 중", badge_color="green",
          title="ContentCare", subtitle="B2B 콘텐츠 보안 서비스",
-         role="리드 엔지니어 · 백엔드 · 인프라 · 앱 출시",
-         metrics=[("1,186", "merged PRs"), ("7/8", "사내 주요 레포 커밋 1위"), ("14개월", "운영 중")],
-         tags=["Node.js", "Python", "AWS", "Docker", "Flutter"]),
+         role="리드 엔지니어 · 백엔드 · 인프라 · 릴리스 운영",
+         metrics=[("1,186", "merged PRs"), ("140+", "릴리스 · CI PR"), ("7/8", "사내 주요 레포 커밋 1위")],
+         tags=["Node.js", "AWS", "IaC", "CI/CD", "SLO", "Docker"]),
     dict(slug="likelion", badge="SoftBank Hackathon 2026 예선 · Team Iris", badge_color="blue",
          title="Likelion", subtitle="코드만 올리면 빌드·배포·AI 진단까지",
-         role="API 서버 · 온프레미스 타깃 · CLI",
+         role="배포 플랫폼 API · 멀티 클러스터 타깃 · CLI",
          metrics=[("133", "merged PRs"), ("+2", "배포 타깃 GKE·온프렘"), ("v0.4", "CLI 릴리스")],
-         tags=["FastAPI", "Argo CD", "EKS", "GKE", "Tailscale", "TypeScript CLI"]),
+         tags=["FastAPI", "Argo CD", "Helm", "EKS", "GKE", "Tailscale"]),
     dict(slug="media-pipeline", badge="Public · 레퍼런스 구현", badge_color="purple",
          title="Event-Driven Media Processing", subtitle="중복 전달·부분 실패에 안전한 비동기 처리",
          role="설계 · 구현 · IaC",
