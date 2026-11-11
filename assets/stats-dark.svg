@@ -3,19 +3,19 @@
 <rect x="1" y="1" width="898" height="248" rx="12" fill="#0d1117" stroke="#30363d"/>
 <circle cx="24" cy="25" r="5" fill="#3fb950"><animate attributeName="opacity" values="1;.35;1" dur="2s" repeatCount="indefinite"/></circle>
 <text x="38" y="30" class="s" font-size="14" font-weight="600" fill="#e6edf3">github_contributions_total</text>
-<text x="876" y="30" text-anchor="end" class="m" fill="#8b949e">user="Saccharine1211" · updated 2026-11-12 03:26 KST</text>
+<text x="876" y="30" text-anchor="end" class="m" fill="#8b949e">user="Saccharine1211" · updated 2026-11-12 03:27 KST</text>
 <rect x="24.0" y="46" width="160.4" height="58" rx="8" fill="#161b22" stroke="#30363d"/>
 <text x="36.0" y="66" class="s" font-size="11" fill="#8b949e">지난 1년 기여</text>
-<text x="36.0" y="92" class="s" font-size="20" font-weight="700" fill="#e6edf3">5,461</text>
+<text x="36.0" y="92" class="s" font-size="20" font-weight="700" fill="#e6edf3">5,457</text>
 <rect x="194.4" y="46" width="160.4" height="58" rx="8" fill="#161b22" stroke="#30363d"/>
 <text x="206.4" y="66" class="s" font-size="11" fill="#8b949e">활동한 날</text>
-<text x="206.4" y="92" class="s" font-size="20" font-weight="700" fill="#e6edf3">230/369일</text>
+<text x="206.4" y="92" class="s" font-size="20" font-weight="700" fill="#e6edf3">229/368일</text>
 <rect x="364.8" y="46" width="160.4" height="58" rx="8" fill="#161b22" stroke="#30363d"/>
 <text x="376.8" y="66" class="s" font-size="11" fill="#8b949e">최장 연속</text>
 <text x="376.8" y="92" class="s" font-size="20" font-weight="700" fill="#3fb950">17일</text>
 <rect x="535.2" y="46" width="160.4" height="58" rx="8" fill="#161b22" stroke="#30363d"/>
 <text x="547.2" y="66" class="s" font-size="11" fill="#8b949e">현재 연속</text>
-<text x="547.2" y="92" class="s" font-size="20" font-weight="700" fill="#3fb950">12일</text>
+<text x="547.2" y="92" class="s" font-size="20" font-weight="700" fill="#3fb950">11일</text>
 <rect x="705.6" y="46" width="160.4" height="58" rx="8" fill="#161b22" stroke="#30363d"/>
 <text x="717.6" y="66" class="s" font-size="11" fill="#8b949e">가장 바쁜 요일</text>
 <text x="717.6" y="92" class="s" font-size="20" font-weight="700" fill="#bc8cff">수요일</text>
@@ -70,7 +70,7 @@
 <rect class="bar" style="animation-delay:0.576s" x="812.0" y="170.7" width="13.4" height="51.3" rx="2" fill="#3fb950" fill-opacity="0.76"/>
 <rect class="bar" style="animation-delay:0.588s" x="828.3" y="185.8" width="13.4" height="36.2" rx="2" fill="#3fb950" fill-opacity="0.67"/>
 <rect class="bar" style="animation-delay:0.600s" x="844.7" y="130.0" width="13.4" height="92.0" rx="2" fill="#3fb950" fill-opacity="1.00"/>
-<rect class="bar" style="animation-delay:0.612s" x="861.1" y="172.1" width="13.4" height="49.9" rx="2" fill="#3fb950" fill-opacity="0.75"/>
+<rect class="bar" style="animation-delay:0.612s" x="861.1" y="172.5" width="13.4" height="49.5" rx="2" fill="#3fb950" fill-opacity="0.75"/>
 <text x="24" y="240" class="m" fill="#8b949e">52주 전</text>
 <text x="876" y="240" text-anchor="end" class="m" fill="#8b949e">이번 주</text>
 </svg>
