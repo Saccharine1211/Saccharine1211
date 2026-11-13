@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""README의 Recently 세 칸(최근 병합 PR · 최근 리뷰 · 최근 작업한 저장소)을 다시 쓴다.
+"""Rewrite the three Recently columns of the README (merged PRs, reviews, repositories).
 
-simonw/simonw 방식: 표식 주석 사이만 바꾸고 나머지는 건드리지 않는다.
-공개 저장소만 다룬다(비공개 회사 저장소 이름이 새지 않게 is:public / privacy:PUBLIC).
-실행: GITHUB_TOKEN=... python3 scripts/update_readme.py
+simonw/simonw style: only the text between marker comments changes.
+Public repositories only (is:public / privacy:PUBLIC), so private company repo names never leak.
+Run: GITHUB_TOKEN=... python3 scripts/update_readme.py
 """
 from __future__ import annotations
 
@@ -17,7 +17,7 @@ from pathlib import Path
 LOGIN = os.environ.get("PROFILE_LOGIN", "Saccharine1211")
 README = Path(__file__).resolve().parent.parent / "README.md"
 N = 5
-# 프로필 방향(백엔드 + 인프라)과 무관한 프런트엔드 레포 활동은 Recently에서 뺀다.
+# Front-end repos are outside the profile focus (backend + infra), so Recently skips them.
 SKIP_REPO = re.compile(r"frontend|-web$|\.github\.io$", re.I)
 
 
@@ -48,7 +48,7 @@ def clean(title: str, limit: int = 58) -> str:
 
 
 def pr_lines(items: list[dict], date_key: str, per_repo: int = 2) -> list[str]:
-    """최근 순서대로 고르되 한 저장소에서 per_repo개까지만(한 레포가 칸을 다 채우지 않게)."""
+    """Newest first, at most per_repo items per repository so one repo cannot fill the column."""
     out, seen, count = [], set(), {}
     for it in items:
         repo = it["repository_url"].rsplit("/", 1)[-1]
@@ -70,14 +70,14 @@ def repo_lines() -> list[str]:
         nodes{ nameWithOwner url description pushedAt isArchived isFork } } } }"""
     nodes = api("https://api.github.com/graphql", {"query": q, "variables": {"login": LOGIN}})[
         "data"]["user"]["repositoriesContributedTo"]["nodes"]
-    nodes.sort(key=lambda n: n["pushedAt"] or "", reverse=True)  # API 정렬이 믿을 만하지 않아 직접 정렬
+    nodes.sort(key=lambda n: n["pushedAt"] or "", reverse=True)  # the API order is unreliable, so sort here
     out = []
     for n in nodes:
         if n["isFork"] or SKIP_REPO.search(n["nameWithOwner"]) or n["nameWithOwner"].lower() == f"{LOGIN}/{LOGIN}".lower():
             continue
         desc = f'<br><sub>{clean(n["description"], 46)}</sub>' if n["description"] else ""
         owner, name = n["nameWithOwner"].split("/", 1)
-        owner = "개인" if owner.lower() == LOGIN.lower() else owner
+        owner = "personal" if owner.lower() == LOGIN.lower() else owner
         out.append(f'- [{name}]({n["url"]}){desc}<br><sub>{owner} · {n["pushedAt"][:10]}</sub>')
         if len(out) == N:
             break
@@ -85,7 +85,7 @@ def repo_lines() -> list[str]:
 
 
 def replace(text: str, marker: str, lines: list[str]) -> str:
-    block = "\n".join(lines) if lines else "- 아직 없음"
+    block = "\n".join(lines) if lines else "- nothing yet"
     pat = re.compile(rf"(<!-- {marker} starts -->)(.*?)(<!-- {marker} ends -->)", re.S)
     if not pat.search(text):
         raise SystemExit(f"marker {marker} not found")

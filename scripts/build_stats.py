@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""기여 달력으로 '모니터링 패널' 모양 통계 SVG를 만든다 (dark/light).
+"""Render the contribution calendar as a monitoring-panel style stats SVG (dark/light).
 
-공개 프로필에 비공개 기여 수도 보이게 설정돼 있어서 GITHUB_TOKEN 만으로 같은 숫자가 나온다.
-실행: GITHUB_TOKEN=... python3 scripts/build_stats.py
+The public profile shows private contribution counts, so GITHUB_TOKEN alone gives the same numbers.
+Run: GITHUB_TOKEN=... python3 scripts/build_stats.py
 """
 from __future__ import annotations
 
@@ -49,7 +49,7 @@ def summarize(weeks: list[dict]) -> dict:
         cur = cur + 1 if c else 0
         longest = max(longest, cur)
     current = 0
-    for c in reversed(counts[:-1] if counts and counts[-1] == 0 else counts):  # 오늘 0이면 어제부터
+    for c in reversed(counts[:-1] if counts and counts[-1] == 0 else counts):  # if today is 0, count from yesterday
         if not c:
             break
         current += 1
@@ -57,12 +57,12 @@ def summarize(weeks: list[dict]) -> dict:
     weekday_tot = [0] * 7
     for d in days:
         weekday_tot[d["weekday"]] += d["contributionCount"]
-    names = ["일", "월", "화", "수", "목", "금", "토"]
+    names = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 
     weekly = [sum(d["contributionCount"] for d in w["contributionDays"]) for w in weeks][-52:]
     return dict(
         total=sum(counts), active=sum(1 for c in counts if c), days=len(counts),
-        longest=longest, current=current, busiest=names[weekday_tot.index(max(weekday_tot))] + "요일",
+        longest=longest, current=current, busiest=names[weekday_tot.index(max(weekday_tot))],
         weekly=weekly, peak=max(weekly) if weekly else 0,
         updated=dt.datetime.now(KST).strftime("%Y-%m-%d %H:%M KST"),
     )
@@ -70,12 +70,12 @@ def summarize(weeks: list[dict]) -> dict:
 
 def stats_svg(s: dict, t: dict) -> str:
     w, h = 900, 250
-    stat = [("지난 1년 기여", f'{s["total"]:,}', t["text"]),
-            ("활동한 날", f'{s["active"]}/{s["days"]}일', t["text"]),
-            ("최장 연속", f'{s["longest"]}일', t["green"]),
-            ("현재 연속", f'{s["current"]}일', t["green"]),
-            ("가장 바쁜 요일", s["busiest"], t["purple"])]
-    out = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}" role="img" aria-label="GitHub 기여 통계">',
+    stat = [("Contributions, last year", f'{s["total"]:,}', t["text"]),
+            ("Active days", f'{s["active"]}/{s["days"]}', t["text"]),
+            ("Longest streak", f'{s["longest"]} days', t["green"]),
+            ("Current streak", f'{s["current"]} days', t["green"]),
+            ("Busiest day", s["busiest"], t["purple"])]
+    out = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}" role="img" aria-label="GitHub contribution stats">',
            f'<style>.m{{font:11px {MONO}}}.s{{font-family:{SANS}}}'
            f'.bar{{transform-origin:bottom;transform-box:fill-box;animation:up .8s ease-out both}}'
            f'@keyframes up{{from{{transform:scaleY(0)}}}}'
@@ -90,7 +90,7 @@ def stats_svg(s: dict, t: dict) -> str:
         out.append(f'<rect x="{x}" y="46" width="{colw-10}" height="58" rx="8" fill="{t["panel"]}" stroke="{t["border"]}"/>')
         out.append(f'<text x="{x+12}" y="66" class="s" font-size="11" fill="{t["muted"]}">{label}</text>')
         out.append(f'<text x="{x+12}" y="92" class="s" font-size="20" font-weight="700" fill="{color}">{val}</text>')
-    # 주간 막대 52개
+    # 52 weekly bars
     top, bottom = 124, 222
     weekly, peak = s["weekly"], max(s["peak"], 1)
     bw = (w - 48) / max(len(weekly), 1)
@@ -98,15 +98,15 @@ def stats_svg(s: dict, t: dict) -> str:
     out.append(f'<line x1="24" y1="{top}" x2="{w-24}" y2="{top}" stroke="{t["border"]}" stroke-dasharray="3 5"/>')
     out.append(f'<text x="{w-24}" y="{top-4}" text-anchor="end" class="m" fill="{t["muted"]}">peak {peak}/wk · √scale</text>')
     for i, v in enumerate(weekly):
-        bh = max((bottom - top - 6) * (v / peak) ** 0.5, 1.5 if v else 0)  # 제곱근 눈금: 몰린 주가 나머지를 뭉개지 않게
+        bh = max((bottom - top - 6) * (v / peak) ** 0.5, 1.5 if v else 0)  # sqrt scale so one busy week does not flatten the rest
         if not bh:
             continue
         x = 24 + i * bw + 1.5
         op = 0.45 + 0.55 * (v / peak) ** 0.5
         out.append(f'<rect class="bar" style="animation-delay:{i*0.012:.3f}s" x="{x:.1f}" y="{bottom-bh:.1f}" '
                    f'width="{bw-3:.1f}" height="{bh:.1f}" rx="2" fill="{t["green"]}" fill-opacity="{op:.2f}"/>')
-    out.append(f'<text x="24" y="{bottom+18}" class="m" fill="{t["muted"]}">52주 전</text>')
-    out.append(f'<text x="{w-24}" y="{bottom+18}" text-anchor="end" class="m" fill="{t["muted"]}">이번 주</text>')
+    out.append(f'<text x="24" y="{bottom+18}" class="m" fill="{t["muted"]}">52 weeks ago</text>')
+    out.append(f'<text x="{w-24}" y="{bottom+18}" text-anchor="end" class="m" fill="{t["muted"]}">this week</text>')
     out.append("</svg>\n")
     return "\n".join(out)
 

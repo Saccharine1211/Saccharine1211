@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""헤더(터미널)와 프로젝트 카드 SVG를 dark/light 두 벌로 만든다.
+"""Build the terminal header and project card SVGs in dark and light themes.
 
-내용을 바꾸려면 아래 HEADER_ROWS, CARDS 를 고치고 `python3 scripts/build_assets.py`.
+Edit HEADER_ROWS / CARDS below, then run `python3 scripts/build_assets.py`.
 """
 from __future__ import annotations
 
@@ -24,25 +24,24 @@ MONO = "ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',m
 SANS = ("-apple-system,BlinkMacSystemFont,'Segoe UI','Apple SD Gothic Neo',"
         "'Noto Sans KR','Malgun Gothic',Helvetica,Arial,sans-serif")
 
-# ── 헤더: 운영 중인 환경 목록처럼 보이는 자기소개 ─────────────────────
+# ── Header: a self-introduction shaped like a terminal listing ───────
 TITLE = "Backend Engineer, owning Infra"
-TAGLINE = "API 서버에서 시작해, 그 서버가 도는 인프라와 운영까지 맡습니다 — 멀티 클라우드 · IaC · 무중단 이전 · 관측"
-COMMAND = "infra status --owner jimin"
-HEADER_COLS = [("ENV", 34), ("PROVIDER", 160), ("ROLE", 344), ("STATUS", 612)]
+TAGLINE = "I start from the API server and own the infra and operations it runs on."
+COMMAND = "work --list"
+HEADER_COLS = [("WHERE", 34), ("STACK", 160), ("ROLE", 344), ("STATUS", 612)]
 HEADER_ROWS = [
-    # (env, provider, role, status, status_color)
-    ("mori-prod", "AWS", "production · release train", "Running", "green"),
-    ("echo-tokyo", "AWS EKS", "workload", "Failover → GKE in 11s", "orange"),
-    ("echo-seoul", "GCP GKE", "control plane · workload", "Ready", "green"),
-    ("echo-onprem", "k3s", "edge · Cloudflare Tunnel", "Reconnected", "blue"),
-    ("likelion", "EKS · GKE · on-prem", "GitOps · Argo CD", "Completed", "purple"),
+    # (where, stack, role, status, status_color)
+    ("MORI Corp.", "AWS · Node · Python", "backend lead · infra · releases", "In production", "green"),
+    ("Team Echo", "AWS · GCP · k3s", "control-plane API · migration", "2nd place, finals", "orange"),
+    ("Team Iris", "EKS · GKE · on-prem", "platform API · GitOps targets", "Preliminaries", "purple"),
+    ("TU Korea", "entered 2023", "undergraduate", "On leave", "blue"),
 ]
 
 
 def header_svg(t: dict) -> str:
     w, h = 900, 392
     lines: list[str] = []
-    step = 0.35  # 줄마다 나타나는 간격(초)
+    step = 0.35  # delay between lines (s)
 
     def row(y: int, body: str, i: int) -> None:
         lines.append(
@@ -56,7 +55,7 @@ def header_svg(t: dict) -> str:
 
     i = 0
     row(78, prompt("whoami"), i); i += 1
-    row(104, f'<text x="34" class="s b" fill="{t["text"]}">Jimin Kim <tspan fill="{t["muted"]}" class="n">(김지민)</tspan>'
+    row(104, f'<text x="34" class="s b" fill="{t["text"]}">Jimin Kim'
              f'<tspan fill="{t["muted"]}" class="n">  ·  </tspan><tspan fill="{t["purple"]}">{escape(TITLE)}</tspan></text>', i); i += 1
     row(130, f'<text x="34" class="s" fill="{t["muted"]}">{escape(TAGLINE)}</text>', i); i += 1
     row(170, prompt(COMMAND), i); i += 1
@@ -97,33 +96,33 @@ def header_svg(t: dict) -> str:
 '''
 
 
-# ── 프로젝트 카드 ────────────────────────────────────────────────────
+# ── Project cards ────────────────────────────────────────────────────
 CARDS = [
-    dict(slug="echoport", badge="🏆 SoftBank Hackathon 2026 본선 우수상(2위)", badge_color="orange",
-         title="EchoPort", subtitle="멀티 클라우드 무중단 이전(BCDR) 플랫폼",
-         role="Team Echo · 제어부 API · 멀티 클라우드 인프라 · 이전 엔진",
-         metrics=[("11s", "도쿄 → 서울 긴급 이전"), ("0/149", "판정 요청 중 실패"), ("123", "merged PRs")],
+    dict(slug="echoport", badge="🏆 SoftBank Hackathon 2026 · Finals, 2nd place", badge_color="orange",
+         title="EchoPort", subtitle="Zero-downtime multi-cloud migration (BCDR)",
+         role="Team Echo · control-plane API · infra · migration engine",
+         metrics=[("11s", "Tokyo → Seoul failover"), ("0/149", "failed probe requests"), ("123", "merged PRs")],
          tags=["FastAPI", "Terraform", "EKS", "GKE", "k3s", "Envoy", "PgBouncer"]),
-    dict(slug="contentcare", badge="주식회사 모리 · 2025.09 ~ 재직 중", badge_color="green",
-         title="ContentCare", subtitle="B2B 콘텐츠 보안 서비스",
-         role="리드 엔지니어 · 백엔드 · 인프라 · 릴리스 운영",
-         metrics=[("1,186", "merged PRs"), ("140+", "릴리스 · CI PR"), ("7/8", "사내 주요 레포 커밋 1위")],
+    dict(slug="contentcare", badge="MORI Corp. · Sep 2025 – present", badge_color="green",
+         title="ContentCare", subtitle="B2B content protection service",
+         role="Lead engineer · backend · infra · release operations",
+         metrics=[("1,186", "merged PRs"), ("140+", "release & CI PRs"), ("7/8", "top committer, main repos")],
          tags=["Node.js", "AWS", "IaC", "CI/CD", "SLO", "Docker"]),
-    dict(slug="likelion", badge="SoftBank Hackathon 2026 예선 · Team Iris", badge_color="blue",
-         title="Likelion", subtitle="코드만 올리면 빌드·배포·AI 진단까지",
-         role="배포 플랫폼 API · 멀티 클러스터 타깃 · CLI",
-         metrics=[("133", "merged PRs"), ("+2", "배포 타깃 GKE·온프렘"), ("v0.4", "CLI 릴리스")],
+    dict(slug="likelion", badge="SoftBank Hackathon 2026 · Preliminaries · Team Iris", badge_color="blue",
+         title="Likelion", subtitle="Push code; get build, deploy and AI diagnosis",
+         role="Platform API · multi-cluster targets · CLI",
+         metrics=[("133", "merged PRs"), ("+2", "targets: GKE, on-prem"), ("v0.4", "CLI release")],
          tags=["FastAPI", "Argo CD", "Helm", "EKS", "GKE", "Tailscale"]),
-    dict(slug="media-pipeline", badge="Public · 레퍼런스 구현", badge_color="purple",
-         title="Event-Driven Media Processing", subtitle="중복 전달·부분 실패에 안전한 비동기 처리",
-         role="설계 · 구현 · IaC",
-         metrics=[("at-least-once", "멱등 처리"), ("FIFO+DLQ", "재시도 격리"), ("OIDC", "키 없는 배포")],
+    dict(slug="media-pipeline", badge="Public · reference implementation", badge_color="purple",
+         title="Event-Driven Media Processing", subtitle="Duplicate- and failure-safe async processing",
+         role="Design · implementation · IaC",
+         metrics=[("at-least-once", "idempotent handling"), ("FIFO+DLQ", "retry isolation"), ("OIDC", "keyless deploys")],
          tags=["TypeScript", "S3", "SQS", "Lambda", "DynamoDB", "CDK"]),
 ]
 
 
 def text_width(s: str, size: float) -> float:
-    """대략적인 글자 폭(한글은 넓게)."""
+    """Approximate text width (wide glyphs count wider)."""
     wide = sum(1 for ch in s if ord(ch) > 0x2E80)
     return (len(s) - wide) * size * 0.6 + wide * size * 1.0
 
@@ -139,7 +138,7 @@ def card_svg(c: dict, t: dict) -> str:
            f'<text x="24" y="64" class="s" font-size="22" font-weight="700" fill="{t["text"]}">{escape(c["title"])}</text>',
            f'<text x="24" y="88" class="s" font-size="13.5" fill="{t["text"]}">{escape(c["subtitle"])}</text>',
            f'<text x="24" y="108" class="s" font-size="12.5" fill="{t["muted"]}">{escape(c["role"])}</text>']
-    # 지표 3칸
+    # three metric boxes
     colw = (w - 48) / 3
     for k, (v, label) in enumerate(c["metrics"]):
         x = 24 + k * colw
@@ -148,7 +147,7 @@ def card_svg(c: dict, t: dict) -> str:
         ls = min(10.5, 10.5 * (colw - 24) / max(text_width(label, 10.5) * 0.92, 1))
         out.append(f'<text x="{x+10}" y="146" class="s" font-size="{vs:.1f}" font-weight="700" fill="{t["text"]}">{escape(v)}</text>')
         out.append(f'<text x="{x+10}" y="165" class="s" font-size="{ls:.1f}" fill="{t["muted"]}">{escape(label)}</text>')
-    # 스택 칩
+    # stack chips
     x, y = 24, 196
     for tag in c["tags"]:
         tw = text_width(tag, 11.5) + 16
