@@ -195,11 +195,11 @@ I have already tried part of this at hackathons. In EchoPort, an on-premises k3s
 
 #### Recently merged PRs
 <!-- recent_prs starts -->
+- [docs: 데모 서비스 종료 안내 + 영어 요약](https://github.com/Softbank-Hackathon-2026-Team-Echo/echo-infra/pull/154)<br><sub>echo-infra · 2026-11-13</sub>
+- [docs: 데모 서비스 종료 안내 + 영어 요약](https://github.com/Softbank-Hackathon-2026-Team-Echo/echo-was/pull/148)<br><sub>echo-was · 2026-11-13</sub>
+- [docs: 데모 서비스 종료 안내 + 영어 요약](https://github.com/Softbank-Hackathon-2026-Team-Echo/.github/pull/1)<br><sub>.github · 2026-11-13</sub>
 - [fix: EKS vpc-cni 외부 SNAT 켜기 — A PgBouncer→B DB ClusterIP …](https://github.com/Softbank-Hackathon-2026-Team-Echo/echo-infra/pull/141)<br><sub>echo-infra · 2026-11-08</sub>
-- [chore: 진입점 보조 VM b 제거 — 진입점 VM 하나만 (#112)](https://github.com/Softbank-Hackathon-2026-Team-Echo/echo-infra/pull/144)<br><sub>echo-infra · 2026-11-08</sub>
 - [perf: 이전 비율 단계 확인 간격 단축(설정)](https://github.com/Softbank-Hackathon-2026-Team-Echo/echo-was/pull/145)<br><sub>echo-was · 2026-11-07</sub>
-- [feat: 시연 조직 스냅샷·복귀 API](https://github.com/Softbank-Hackathon-2026-Team-Echo/echo-was/pull/142)<br><sub>echo-was · 2026-11-07</sub>
-- [fix: 실행 이미지의 zlib1g 를 보안 수정판(deb13u1)으로 올린다](https://github.com/Softbank-Hackathon-2026-Team-Echo/echo-demo-app/pull/13)<br><sub>echo-demo-app · 2026-11-07</sub>
 <!-- recent_prs ends -->
 
 </td><td valign="top" width="33%">
@@ -215,10 +215,10 @@ I have already tried part of this at hackathons. In EchoPort, an on-premises k3s
 
 #### Recently active repositories
 <!-- recent_repos starts -->
-- [echo-infra](https://github.com/Softbank-Hackathon-2026-Team-Echo/echo-infra)<br><sub>EchoPort 인프라와 이전 엔진. Terraform · EKS · GKE · …</sub><br><sub>Softbank-Hackathon-2026-Team-Echo · 2026-11-08</sub>
+- [echo-infra](https://github.com/Softbank-Hackathon-2026-Team-Echo/echo-infra)<br><sub>EchoPort 인프라와 이전 엔진. Terraform · EKS · GKE · …</sub><br><sub>Softbank-Hackathon-2026-Team-Echo · 2026-11-13</sub>
+- [echo-was](https://github.com/Softbank-Hackathon-2026-Team-Echo/echo-was)<br><sub>EchoPort 관리 평면 API. 환경 · 배포 · 이전 계획 · 재난 · 보안…</sub><br><sub>Softbank-Hackathon-2026-Team-Echo · 2026-11-13</sub>
 - [echo-demo-app](https://github.com/Softbank-Hackathon-2026-Team-Echo/echo-demo-app)<br><sub>시연용 관리 대상 앱. 순번 쓰기로 이전 중 누락 · 중복 확인</sub><br><sub>Softbank-Hackathon-2026-Team-Echo · 2026-11-08</sub>
 - [echo-ai-agent](https://github.com/Softbank-Hackathon-2026-Team-Echo/echo-ai-agent)<br><sub>EchoPort AI 에이전트 러너. 격리 샌드박스에서 점검 · 수정 · 검증</sub><br><sub>Softbank-Hackathon-2026-Team-Echo · 2026-11-08</sub>
-- [echo-was](https://github.com/Softbank-Hackathon-2026-Team-Echo/echo-was)<br><sub>EchoPort 관리 평면 API. 환경 · 배포 · 이전 계획 · 재난 · 보안…</sub><br><sub>Softbank-Hackathon-2026-Team-Echo · 2026-11-08</sub>
 - [hoshi-words](https://github.com/Shin-Bi/hoshi-words)<br><sub>별빛 단어 공개 데모 — 직접 작성한 단어·예문과 Flutter 학습 화면, An…</sub><br><sub>Shin-Bi · 2026-11-05</sub>
 <!-- recent_repos ends -->
 
