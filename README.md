@@ -217,9 +217,9 @@ I have already tried part of this at hackathons. In EchoPort, an on-premises k3s
 <!-- recent_repos starts -->
 - [echo-infra](https://github.com/Softbank-Hackathon-2026-Team-Echo/echo-infra)<br><sub>EchoPort 인프라와 이전 엔진. Terraform · EKS · GKE · …</sub><br><sub>Softbank-Hackathon-2026-Team-Echo · 2026-11-13</sub>
 - [echo-was](https://github.com/Softbank-Hackathon-2026-Team-Echo/echo-was)<br><sub>EchoPort 관리 평면 API. 환경 · 배포 · 이전 계획 · 재난 · 보안…</sub><br><sub>Softbank-Hackathon-2026-Team-Echo · 2026-11-13</sub>
+- [.github](https://github.com/Softbank-Hackathon-2026-Team-Echo/.github)<br><sub>Team Echo 조직 소개 페이지</sub><br><sub>Softbank-Hackathon-2026-Team-Echo · 2026-11-13</sub>
 - [echo-demo-app](https://github.com/Softbank-Hackathon-2026-Team-Echo/echo-demo-app)<br><sub>시연용 관리 대상 앱. 순번 쓰기로 이전 중 누락 · 중복 확인</sub><br><sub>Softbank-Hackathon-2026-Team-Echo · 2026-11-08</sub>
 - [echo-ai-agent](https://github.com/Softbank-Hackathon-2026-Team-Echo/echo-ai-agent)<br><sub>EchoPort AI 에이전트 러너. 격리 샌드박스에서 점검 · 수정 · 검증</sub><br><sub>Softbank-Hackathon-2026-Team-Echo · 2026-11-08</sub>
-- [hoshi-words](https://github.com/Shin-Bi/hoshi-words)<br><sub>별빛 단어 공개 데모 — 직접 작성한 단어·예문과 Flutter 학습 화면, An…</sub><br><sub>Shin-Bi · 2026-11-05</sub>
 <!-- recent_repos ends -->
 
 </td></tr></table>
